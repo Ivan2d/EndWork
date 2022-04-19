@@ -1,10 +1,12 @@
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 
-public class Tests {
+public class Tests
+{
 
     String s1 = "hello";
     String s2 = "hello world";
@@ -19,32 +21,32 @@ public class Tests {
     @Test
     public void ITaskTest(){
         Function<String, Integer> lambda = LambdaDemo.getLengthOfString;
-        assertEquals(5, LambdaRunner.stringRun(lambda, s1));
+        assertEquals(Optional.of(5), Optional.ofNullable(LambdaRunner.run(lambda, s1)));
     }
 
     @Test
     public void IITaskTest(){
         Function<String, Character> lambda = LambdaDemo.getFirstElem;
-        assertEquals('h',LambdaRunner.stringRun(lambda,s1));
+        assertEquals(Optional.of('h'),Optional.ofNullable(LambdaRunner.run(lambda,s1)));
     }
 
     @Test
     public void IIITaskTest(){
         Function<String, Boolean> lambda = LambdaDemo.haveSpace;
-        assertEquals(false, LambdaRunner.stringRun(lambda,s2));
+        assertEquals(false, LambdaRunner.run(lambda,s2));
     }
 
     @Test
     public void IVTaskTest(){
         Function<String, Integer> lambda = LambdaDemo.countWordsInString;
-        assertEquals(5, LambdaRunner.stringRun(lambda,s3));
+        assertEquals(Optional.of(5), Optional.ofNullable(LambdaRunner.run(lambda,s3)));
     }
 
     @Test
     public void VTaskTest(){
         Function<? super Human, Integer> lambda = LambdaDemo.getAgeOfHuman;
-        assertEquals(19,LambdaRunner.functionRun(lambda,human1));
-        assertEquals(23,LambdaRunner.functionRun(lambda,human2));
+        assertEquals(Optional.of(19), Optional.ofNullable(LambdaRunner.run(lambda,human1)));
+        assertEquals(Optional.of(23), Optional.ofNullable(LambdaRunner.run(lambda,human2)));
     }
 
     @Test
@@ -56,15 +58,15 @@ public class Tests {
     @Test
     public void VIITaskTest(){
         Function<? super Human, String> lambda = LambdaDemo.makeStringHuman;
-        assertEquals("Р Ай Оч", LambdaRunner.functionRun(lambda,human1));
-        assertEquals("Иванов Иван Иванович", LambdaRunner.functionRun(lambda, human2));
+        assertEquals("Р Ай Оч", LambdaRunner.run(lambda,human1));
+        assertEquals("Иванов Иван Иванович", LambdaRunner.run(lambda, human2));
     }
 
     @Test
     public void VIIITaskTest(){
         Function<Human,Human> lambda = LambdaDemo.getOlder;
-        assertEquals(20, LambdaRunner.oldHumanRun(lambda, human1).getAge());
-        assertEquals(24, LambdaRunner.oldHumanRun(lambda, human2).getAge());
+        assertEquals(20, LambdaRunner.run(lambda, human1).getAge());
+        assertEquals(24, LambdaRunner.run(lambda, human2).getAge());
     }
 
     @Test
@@ -74,5 +76,11 @@ public class Tests {
 
         assertTrue(LambdaDemo.equalsAge.checkHumansAndMaxAge(human1, human3, human4, maxAge1));
         assertFalse(LambdaDemo.equalsAge.checkHumansAndMaxAge(human1, human3, human4, maxAge2));
+    }
+
+    @Test
+    public void XTaskTest()
+    {
+        assertFalse(LambdaRunner.checkAgeRun(LambdaDemo.equalsAge, human1, human2, human3, 20));
     }
 }
