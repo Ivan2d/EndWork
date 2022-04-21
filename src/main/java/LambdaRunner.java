@@ -3,9 +3,9 @@ import java.util.function.Function;
 
 public class LambdaRunner
 {
-    public static<T, V> V run(Function<T, V> lyambda, T param)
+    public static<T, V> V run(Function<T, V> lambda, T param)
     {
-        return lyambda.apply(param);
+        return lambda.apply(param);
     }
 
     public static <T extends Human> Boolean biFunctionRun(BiFunction<? super Human, ? super Human, Boolean> lambda, Human human1, Human human2){
